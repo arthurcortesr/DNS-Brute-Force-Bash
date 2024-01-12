@@ -2,8 +2,6 @@
 
 O script ```dns_brute_force.sh``` é  uma ferramenta de linha de comando desenvolvida em bash para realizar ataques de força bruta em domínios, buscando por subdomínios potenciais. Essa abordagem é útil para identificar possíveis pontos de entrada em sistemas web e redes.
 
-Este repositório também possui o arquivo melhorias que é usado para adicionar anotações de possíveis melhorias a serem implementadas no no script.
-
 <br>
 
 ---
