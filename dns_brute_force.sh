@@ -16,12 +16,15 @@ if [ "$#" -ne 2 ]; then
     echo "-------------------------------------------------------------------------------------"
     echo "Exemplo: $0 businesscorp.com.br /usr/share/dirb/wordlists/small.txt"
     echo "-------------------------------------------------------------------------------------"
-    exit 1
+exit 1
 fi
 
 echo "--------------------------------"
 echo -e "|${COR_PKA}Pk's Academy${RESET} - ${COR_DNS}DNS BRUTE FORCE${RESET}|"
 echo "--------------------------------"
+echo
+echo "Fazendo Brute Force"
+echo
 
 dominio=$1
 lista_arquivo=$2
@@ -42,7 +45,8 @@ while read -r palavra; do
 
     # Tratamento de resposta vazia
     if [ -z "$resultado" ]; then
-        echo -e "{COR_VERMELHO}Domínio não encontrado: $palavra.$dominio${RESET}"
+        # Não faz nada se o resultado estiver vazio (domínio não encontrado)
+        :
     else
         # Exibição personalizada
         echo -e "${COR_VERDE}$resultado${RESET}" | grep -v "$string_nxdomain" | sed 's/has address/--->/'
