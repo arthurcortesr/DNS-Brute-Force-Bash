@@ -27,9 +27,9 @@ O script ```dns_brute_force.sh``` é  uma ferramenta de linha de comando desenvo
 |Pk's Academy - DNS BRUTE FORCE|
 --------------------------------
 
-Subdomínio não encontrado: teste1.exemplo.com
+Subdomínio encontrado: teste1.exemplo.com
 Subdomínio encontrado: www.exemplo.com ---> 192.168.1.10
-Subdomínio não encontrado: teste2.exemplo.com
+Subdomínio encontrado: teste2.exemplo.com
 Subdomínio encontrado: blog.exemplo.com ---> 192.168.1.15
 ...
 ```
