@@ -1,54 +1,37 @@
 #!/bin/bash
 
 # Definindo códigos de cor ANSI
-COR_PKA='\e[38;5;197m'  # F5055C
-COR_DNS='\e[38;5;220m'  # FEB63E
-COR_VERDE='\e[92m' # 00FF00
-COR_VERMELHO='\e[38;5;196m'   # E10406
-RESET='\e[0m'  # Reset para as configurações padrão de cor
+pk='\e[38;5;197m'  # F5055C
+dns='\e[38;5;220m'  # FEB63E
+verde='\e[92m' # 00FF00
+vermelho='\e[38;5;196m'   # E10406
+reset='\e[0m'  # Reset para as configurações padrão de cor
 
-# Uso adequado
+# Verifica se a quantidade de argumentos é válida
 if [ "$#" -ne 2 ]; then
-    echo "-------------------------------------------------------------------------------------"
-    echo -e "${COR_PKA}Pk's Academy${RESET} - ${COR_DNS}DNS BRUTE FORCE${RESET}"
-    echo "-------------------------------------------------------------------------------------"
-    echo "Modo de uso: $0 <dominio> <arquivo_lista>"
-    echo "-------------------------------------------------------------------------------------"
-    echo "Exemplo: $0 businesscorp.com.br /usr/share/dirb/wordlists/small.txt"
-    echo "-------------------------------------------------------------------------------------"
-exit 1
+	echo "-------------------------------------------------------------------------------------"
+	echo -e "${pk}Pk's Academy${reset} - ${dns}DNS BRUTE FORCE${reset}"
+	echo "-------------------------------------------------------------------------------------"
+	echo "Modo de uso: ./dns_brute_force.sh <dominio> <arquivo_lista>"
+	echo "-------------------------------------------------------------------------------------"
+	echo "Exemplo: ./dns_brute_force.sh businesscorp.com.br /usr/share/dirb/wordlists/small.txt"
+	echo "-------------------------------------------------------------------------------------"
+	exit 1
 fi
 
+# Mensagem de início
 echo "--------------------------------"
-echo -e "|${COR_PKA}Pk's Academy${RESET} - ${COR_DNS}DNS BRUTE FORCE${RESET}|"
+echo -e "|${pk}Pk's Academy${reset} - ${dns}DNS BRUTE FORCE${reset}|"
 echo "--------------------------------"
 echo
-echo "Fazendo Brute Force"
+echo "Fazendo Brute Force..."
 echo
 
-dominio=$1
-lista_arquivo=$2
 
-# Variáveis
-comando_host="host"
-string_nxdomain="NXDOMAIN"
-
-# Verifica se o arquivo de lista existe
-if [ ! -f "$lista_arquivo" ]; then
-    echo -e "${COR_VERMELO}Erro: O arquivo de lista '$lista_arquivo' não existe.${RESET}"
-    exit 1
-fi
-
-# Loop através da lista
-while read -r palavra; do
-    resultado=$($comando_host "$palavra.$dominio")
-
-    # Tratamento de resposta vazia
-    if [ -z "$resultado" ]; then
-        # Não faz nada se o resultado estiver vazio (domínio não encontrado)
-        :
-    else
-        # Exibição personalizada
-        echo -e "${COR_VERDE}$resultado${RESET}" | grep -v "$string_nxdomain" | sed 's/has address/--->/'
+# Loop para fazer brute force
+while IFS= read -r palavra; do
+    resultado=$(host "$palavra.$1" | grep -v "NXDOMAIN" | sed 's/has address/--->/')
+    if [ -n "$resultado" ]; then
+        echo -e "\e[92m$resultado\e[0m"
     fi
-done < "$lista_arquivo"
+done < "$2"
